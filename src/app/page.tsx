@@ -1,3 +1,4 @@
+import BrowseButton from "@/components/global/BrowseButton";
 import HomeCards from "@/components/home/HomeCards";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { ArrowDownRightIcon } from "lucide-react";
@@ -18,10 +19,7 @@ export default function Home() {
         </h4>
       </div>
       <div className="flex flex-col md:flex-row gap-2 items-center justify-center">
-        <Link href={"/"} className={buttonVariants()}>
-          Browse Trending
-          <ArrowDownRightIcon width={20} />
-        </Link>
+        <BrowseButton />
         <Button variant={"outline"}>Our quality promise</Button>
       </div>
       <HomeCards />
