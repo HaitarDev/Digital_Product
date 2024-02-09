@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="w-full ">
       <body
-        className={cn(inter.className, "min-h-screen relative flex flex-col")}
+        className={cn(inter.className, "min-h-screen relative flex flex-col ")}
       >
         <div className="absolute top-0 right-0   z-[-2] min-h-screen h-full w-screen bg-white bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.13)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)]"></div>
         <main className="relative w-full h-full">

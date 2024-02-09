@@ -1,9 +1,12 @@
 "use client";
-import { Menu } from "lucide-react";
-import BrowseButton from "../global/BrowseButton";
+import { Menu, X } from "lucide-react";
+
 import NavItems from "./NavItems";
 import { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
+import { Button } from "../ui/button";
+import SidebarCart from "./SidebarCart";
+import { Separator } from "../ui/separator";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -34,15 +37,20 @@ function Navbar() {
           </div>
         </div>
         <div className="flex items-center gap-5">
-          <BrowseButton />
-
+          <Button>Login</Button>
+          <SidebarCart />
+          <Separator orientation="vertical" className="block md:hidden h-6" />
           {/* only on small */}
-          <Menu className="md:hidden cursor-pointer" onClick={handleOpen} />
+          {!isOpen ? (
+            <Menu className="md:hidden cursor-pointer" onClick={handleOpen} />
+          ) : (
+            <X className="md:hidden cursor-pointer" onClick={handleOpen} />
+          )}
         </div>
       </div>
       {isOpen ? (
         <div
-          className="absolute bg-black/10 min-h-screen w-full h-full"
+          className="absolute bg-black/80 min-h-screen w-full h-full overflow-hidden "
           onClick={handleOpen}
         ></div>
       ) : null}

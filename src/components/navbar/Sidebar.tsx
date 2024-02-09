@@ -7,14 +7,15 @@ import {
 } from "@/components/ui/accordion";
 import { ICONS, UI_KITS } from "@/lib/const";
 import Link from "next/link";
+import { Button } from "../ui/button";
 
 function Sidebar({ isOpen }: { isOpen: boolean }) {
   return (
     <div
       className={cn(
-        "md:hidden absolute bg-white right-0 h-screen w-72 duration-150 ease-in-out overflow-hidden drop-shadow-sm",
+        "md:hidden absolute bg-white right-0 h-screen w-72 duration-300 ease-in-out overflow-hidden drop-shadow-sm fade-in-0 ",
         {
-          "w-72": isOpen,
+          "w-full sm:w-72  overflow-hidden": isOpen,
           "w-0": !isOpen,
         }
       )}
@@ -50,6 +51,13 @@ function Sidebar({ isOpen }: { isOpen: boolean }) {
         >
           <Link href={"/about"}>About</Link>
         </AccordionItem>
+
+        <Button
+          variant={"destructive"}
+          className="px-2 py-4 hover:no-underline font-medium w-10/12  flex justify-center mx-auto mt-4"
+        >
+          Signup
+        </Button>
       </Accordion>
     </div>
   );
