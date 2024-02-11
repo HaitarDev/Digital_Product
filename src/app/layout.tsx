@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/navbar/Navbar";
+import TrpcProvider from "@/components/global/TrpcProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,8 +24,10 @@ export default function RootLayout({
       >
         <div className="absolute top-0 right-0   z-[-2] min-h-screen h-full w-screen bg-white bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.13)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)]"></div>
         <main className="relative w-full h-full">
-          <Navbar />
-          {children}
+          <TrpcProvider>
+            <Navbar />
+            {children}
+          </TrpcProvider>
         </main>
       </body>
     </html>
