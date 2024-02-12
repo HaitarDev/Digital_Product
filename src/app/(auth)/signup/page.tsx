@@ -23,9 +23,9 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupUserSchema, SignupType } from "@/validator/auth";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { trpc } from "@/trpc/client";
+import { useState } from "react";
+
+import { trpc } from "@/server/client";
 
 export default function Signup() {
   const [error, setError] = useState<String>("");
@@ -44,7 +44,7 @@ export default function Signup() {
   };
 
   const { data, error: serror } = trpc.hello.useQuery();
-  console.log(serror);
+  console.log(data);
   const sessionStatus: string = "asd";
   return (
     sessionStatus !== "authenticated" && (
