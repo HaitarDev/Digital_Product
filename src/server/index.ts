@@ -1,9 +1,9 @@
+import { signupUserSchema } from "@/validator/auth";
 import { publicProcedure, router } from "./trpc";
+import { authRouter } from "./authRouter";
 
 export const appRouter = router({
-  hello: publicProcedure.query(async () => {
-    return [10, 4, 10];
-  }),
+  auth: authRouter,
 });
 
 export type AppRouter = typeof appRouter;
