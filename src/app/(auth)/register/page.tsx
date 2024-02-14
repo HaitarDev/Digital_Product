@@ -24,12 +24,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signupUserSchema, SignupType } from "@/validator/auth";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-
-import { trpc } from "@/server/client";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function Signup() {
   const [error, setError] = useState<String>("");
   const [loading, setIsLoading] = useState<boolean>(false);
+
+  const router = useRouter();
+  const session = useSession();
 
   const form = useForm<SignupType>({
     resolver: zodResolver(signupUserSchema),
@@ -39,12 +42,37 @@ export default function Signup() {
     },
   });
 
-  const onSubmit = (values: SignupType) => {
-    console.log(values);
+  if (session.status === "authenticated") {
+    router.push("/");
+    return null;
+  }
+  const onSubmit = async (values: SignupType) => {
+    try {
+      const registerUser = async () => {
+        const res = await fetch("/api/auth/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
+
+        if (!res.ok) {
+          throw setError("Failed to register user");
+        }
+        return await res.json();
+      };
+
+      await registerUser();
+      router.push("/login");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+      setError("");
+    }
   };
 
-  const { data, error: serror } = trpc.hello.useQuery();
-  console.log(data);
   const sessionStatus: string = "asd";
   return (
     sessionStatus !== "authenticated" && (

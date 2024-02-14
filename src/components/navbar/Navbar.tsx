@@ -7,9 +7,11 @@ import Sidebar from "./Sidebar";
 import { Button } from "../ui/button";
 import SidebarCart from "./SidebarCart";
 import { Separator } from "../ui/separator";
+import { useRouter } from "next/navigation";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleOpen = () => {
     setIsOpen((prev) => !prev);
@@ -37,7 +39,13 @@ function Navbar() {
           </div>
         </div>
         <div className="flex items-center gap-5">
-          <Button>Login</Button>
+          <Button onClick={() => router.push("/login")}>Login</Button>
+          <Button
+            variant={"destructive"}
+            onClick={() => router.push("/register")}
+          >
+            Register
+          </Button>
           <SidebarCart />
           <Separator orientation="vertical" className="block md:hidden h-6" />
           {/* only on small */}

@@ -25,10 +25,16 @@ import { signupUserSchema, SignupType } from "@/validator/auth";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Signup() {
   const [error, setError] = useState<String>("");
   const [loading, setIsLoading] = useState<boolean>(false);
+
+  const session = useSession();
+  const router = useRouter();
+
+  console.log(session);
 
   const form = useForm<SignupType>({
     resolver: zodResolver(signupUserSchema),
@@ -38,8 +44,25 @@ export default function Signup() {
     },
   });
 
-  const onSubmit = (values: SignupType) => {
-    console.log(values);
+  if (session.status === "authenticated") {
+    router.push("/");
+    return null;
+  }
+
+  const onSubmit = async (values: SignupType) => {
+    setIsLoading(true);
+    setError("");
+
+    signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      redirect: false,
+    });
+    if (session.status === "unauthenticated")
+      return setError("Invalid credentials");
+
+    setIsLoading(false);
+    setError("");
   };
 
   const sessionStatus: string = "asd";
@@ -55,9 +78,11 @@ export default function Signup() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <CardHeader className="space-y-1">
-                <CardTitle className="text-3xl">Create an account</CardTitle>
+                <CardTitle className="text-3xl">
+                  Login to your account
+                </CardTitle>
                 <CardDescription>
-                  Enter your email below to create your account
+                  Enter your email below to login
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col justify-between gap-2 lg:gap-4">
